@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<script>
+    function rref(matrix) {
+    let lead = 0;
+    const rowCount = matrix.length;
+    const colCount = matrix[0].length;
+
+    for (let r = 0; r < rowCount; r++) {
+        if (colCount <= lead) {
+            return;
+        }
+
+        let i = r;
+        while (matrix[i][lead] === 0) {
+            i++;
+            if (rowCount === i) {
+                i = r;
+                lead++;
+                if (colCount === lead) {
+                    return;
+                }
+            }
+        }
+
+        let temp = matrix[i];
+        matrix[i] = matrix[r];
+        matrix[r] = temp;
+
+        let val = matrix[r][lead];
+        for (let j = 0; j < colCount; j++) {
+            matrix[r][j] /= val;
+        }
+
+        for (let i = 0; i < rowCount; i++) {
+            if (i !== r) {
+                val = matrix[i][lead];
+                for (let j = 0; j < colCount; j++) {
+                    matrix[i][j] -= val * matrix[r][j];
+                }
+            }
+        }
+        lead++;
+    }
+    return matrix;
+}
+
+// Example usage:
+const matrix = [
+    [1, 0, 0],
+    [0, 1, 0,],
+    [0, 1, 0,]
+];
+
+const result = rref(matrix);
+console.log(result);
+
+
+</script>
+<body>
+    
+</body>
+</html>
